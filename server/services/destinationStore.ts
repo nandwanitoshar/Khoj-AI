@@ -10,8 +10,12 @@ import os from 'os';
 const DATA_DIR = process.env.VERCEL ? path.join(os.tmpdir(), 'khoj_data') : path.resolve(process.cwd(), 'data_cache');
 const QUESTS_FILE = path.join(DATA_DIR, 'saved_quests.json');
 
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
+try {
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  }
+} catch (e) {
+  // Read-only environment protection
 }
 
 let inMemoryDestinations: any[] = seedDestinations.map((d, index) => ({
@@ -35,6 +39,9 @@ function getPersistedQuests(): any[] {
 
 function persistQuests(quests: any[]) {
   try {
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
     fs.writeFileSync(QUESTS_FILE, JSON.stringify(quests, null, 2), 'utf-8');
   } catch (e) {
     console.error('Error persisting quests:', e);
