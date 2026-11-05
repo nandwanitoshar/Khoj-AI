@@ -1,0 +1,39 @@
+{
+  "name": "khoj-ai",
+  "version": "1.0.0",
+  "description": "KHOJ AI - Real Local Discovery Engine. Your City Is Hiding Stories.",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "tsx server/server.ts",
+    "client": "npm --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "start": "tsx server/server.ts",
+    "seed": "tsx server/scripts/seed.ts"
+  },
+  "keywords": [
+    "khoj-ai",
+    "local-discovery",
+    "gemini",
+    "mongodb",
+    "travel-exploration"
+  ],
+  "author": "KHOJ AI Team",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^2.32.0",
+    "@google/generative-ai": "^0.24.1",
+    "concurrently": "^9.1.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5",
+    "tsx": "^4.19.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.1",
+    "typescript": "^5.7.3"
+  }
+}
