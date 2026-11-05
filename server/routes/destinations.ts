@@ -32,7 +32,8 @@ router.get('/', async (req: Request, res: Response) => {
 // GET /api/destinations/:id
 router.get('/:id', async (req: Request, res: Response) => {
   try {
-    const dest = await DestinationStore.getById(req.params.id);
+    const destId = String(req.params.id);
+    const dest = await DestinationStore.getById(destId);
     if (!dest) {
       return res.status(404).json({ success: false, error: 'Destination not found' });
     }

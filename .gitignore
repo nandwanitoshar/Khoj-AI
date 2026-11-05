@@ -11,3 +11,6 @@ data_cache
 *.log
 .DS_Store
 .vercel
+
+.vercel
+.env*

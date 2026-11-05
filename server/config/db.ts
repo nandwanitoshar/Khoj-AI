@@ -24,7 +24,7 @@ export async function connectDB(): Promise<void> {
     const count = await Destination.countDocuments();
     if (count === 0) {
       console.log(`[MongoDB] Seeding ${seedDestinations.length} verified destinations...`);
-      await Destination.insertMany(seedDestinations);
+      await Destination.insertMany(seedDestinations as any);
       console.log('✅ [MongoDB] Seeding complete.');
     } else {
       console.log(`[MongoDB] Database already has ${count} destinations.`);

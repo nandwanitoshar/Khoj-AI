@@ -54,7 +54,7 @@ export class DestinationStore {
             { tags: new RegExp(filter.search, 'i') }
           ];
         }
-        return await Destination.find(query).sort({ hiddenGemScore: -1 });
+        return await (Destination as any).find(query).sort({ hiddenGemScore: -1 });
       } catch (err) {
         console.error('MongoDB query error, falling back to memory store:', err);
       }
@@ -83,7 +83,7 @@ export class DestinationStore {
   static async getById(id: string): Promise<any | null> {
     if (isDbConnected()) {
       try {
-        const dest = await Destination.findById(id);
+        const dest = await (Destination as any).findById(id);
         if (dest) return dest;
       } catch (err) {
         // ID might not be a valid ObjectId
@@ -95,7 +95,7 @@ export class DestinationStore {
   static async getHiddenGems(minScore = 7): Promise<any[]> {
     if (isDbConnected()) {
       try {
-        return await Destination.find({ hiddenGemScore: { $gte: minScore } }).sort({ hiddenGemScore: -1 });
+        return await (Destination as any).find({ hiddenGemScore: { $gte: minScore } }).sort({ hiddenGemScore: -1 });
       } catch (err) {
         console.error('MongoDB query error, falling back:', err);
       }
@@ -134,7 +134,7 @@ export class QuestStore {
   static async getBySession(sessionId: string): Promise<any[]> {
     if (isDbConnected()) {
       try {
-        return await Quest.find({ sessionId }).sort({ createdAt: -1 });
+        return await (Quest as any).find({ sessionId }).sort({ createdAt: -1 });
       } catch (err) {
         console.error('MongoDB getBySession error, falling back:', err);
       }
@@ -147,7 +147,7 @@ export class QuestStore {
   static async getById(id: string): Promise<any | null> {
     if (isDbConnected()) {
       try {
-        const quest = await Quest.findById(id);
+        const quest = await (Quest as any).findById(id);
         if (quest) return quest;
       } catch (err) {
         // ID might not be a valid ObjectId
@@ -161,7 +161,7 @@ export class QuestStore {
   static async deleteById(id: string): Promise<boolean> {
     if (isDbConnected()) {
       try {
-        const result = await Quest.findByIdAndDelete(id);
+        const result = await (Quest as any).findByIdAndDelete(id);
         if (result) return true;
       } catch (err) {
         console.error('MongoDB delete error:', err);

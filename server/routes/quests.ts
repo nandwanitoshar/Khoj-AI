@@ -112,7 +112,7 @@ router.post('/save', async (req: Request, res: Response) => {
 // GET /api/quests/:sessionId - Retrieve saved quests for a user
 router.get('/:sessionId', async (req: Request, res: Response) => {
   try {
-    const { sessionId } = req.params;
+    const sessionId = String(req.params.sessionId);
     const quests = await QuestStore.getBySession(sessionId);
     res.json({
       success: true,
@@ -130,7 +130,8 @@ router.get('/:sessionId', async (req: Request, res: Response) => {
 // GET /api/quests/detail/:id - Retrieve specific quest by id
 router.get('/detail/:id', async (req: Request, res: Response) => {
   try {
-    const quest = await QuestStore.getById(req.params.id);
+    const questId = String(req.params.id);
+    const quest = await QuestStore.getById(questId);
     if (!quest) {
       return res.status(404).json({ success: false, error: 'Quest not found' });
     }
@@ -143,8 +144,8 @@ router.get('/detail/:id', async (req: Request, res: Response) => {
 // DELETE /api/quests/:id - Actually delete quest document from MongoDB
 router.delete('/:id', async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const success = await QuestStore.deleteById(id);
+    const questId = String(req.params.id);
+    const success = await QuestStore.deleteById(questId);
     if (!success) {
       return res.status(404).json({
         success: false,
