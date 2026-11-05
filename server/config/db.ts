@@ -5,6 +5,11 @@ import { seedDestinations } from '../data/seedData.js';
 let isConnected = false;
 
 export async function connectDB(): Promise<void> {
+  if (mongoose.connection.readyState === 1) {
+    isConnected = true;
+    return;
+  }
+
   const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/khoj_ai';
 
   try {

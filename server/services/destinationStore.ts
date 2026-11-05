@@ -4,9 +4,10 @@ import { seedDestinations } from '../data/seedData.js';
 import { isDbConnected } from '../config/db.js';
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 
 // Local storage backup file if MongoDB server isn't running on the developer's laptop
-const DATA_DIR = path.resolve(process.cwd(), 'data_cache');
+const DATA_DIR = process.env.VERCEL ? path.join(os.tmpdir(), 'khoj_data') : path.resolve(process.cwd(), 'data_cache');
 const QUESTS_FILE = path.join(DATA_DIR, 'saved_quests.json');
 
 if (!fs.existsSync(DATA_DIR)) {
